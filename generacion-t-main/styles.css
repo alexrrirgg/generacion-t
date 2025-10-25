@@ -1,0 +1,249 @@
+/* ESTILOS GENERALES  */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+:root{
+  /* Paleta principal pensada para tema natural/animal */
+  --bg-start: #f6fbfc; /* fondo suave */
+  --bg-end: #eaf6fb;
+  --primary: #2a6f97; /* azul profundo */
+  --secondary: #3aa76d; /* verde hoja */
+  --accent: #f4a261; /* naranja cálido */
+  --muted: #9fb6c6;
+  --card-bg: #ffffff;
+  --text: #173044; /* gris oscuro azulado */
+  --footer: #0b4f6c; /* azul oscuro para footer */
+  --shadow: rgba(23,48,68,0.08);
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  color: var(--text);
+  line-height: 1.6;
+  /* layout para sticky footer: que el footer quede abajo si el contenido es corto */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ENCABEZADO */
+header {
+  background: linear-gradient(90deg, var(--secondary), color-mix(in srgb, var(--secondary) 70%, var(--primary) 30%));
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+  box-shadow: 0 3px 18px var(--shadow);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+}
+
+header nav a {
+  color: #ffffff;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* MENU PRINCIPAL  */
+.menu-principal {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.menu-principal h2 {
+  color: #023e8a;
+  font-size: 2rem;
+}
+
+.botones-menu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.botones-menu a {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.9rem 1.6rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: transform 0.18s ease, background 0.18s ease;
+  box-shadow: 0 6px 16px rgba(42,111,151,0.08);
+}
+
+.botones-menu a:hover {
+  background: color-mix(in srgb, var(--primary) 80%, #000000 20%);
+  transform: translateY(-3px);
+}
+
+.contenedor {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;      
+  padding: 2rem;
+  justify-items: stretch; 
+}
+
+article {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px var(--shadow);
+  padding: 1rem 1.2rem;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  width: 100%;        
+  box-sizing: border-box;
+}
+
+article:hover {
+  transform: scale(1.03);
+}
+
+article img {
+  width: 100%;
+  height: 260px; 
+  border-radius: 10px;
+  object-fit: cover; 
+  display: block;
+}
+
+article h3 {
+  margin: 1rem 0 0.5rem;
+  color: var(--primary);
+  text-transform: capitalize;
+}
+
+article p {
+  margin: 0.3rem 0;
+}
+
+strong {
+  color: color-mix(in srgb, var(--primary) 60%, var(--text) 40%);
+}
+
+footer {
+  text-align: center;
+  background: var(--footer);
+  color: #fff;
+  padding: 1rem 0.9rem;
+  margin-top: auto;
+}
+/*animacion de las hojas*/
+.hoja{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  /* Si no tienes un archivo hoja.png, habrá un color de respaldo para que se vean las hojas */
+  background-image: url('hoja.png'); /* tu hoja (opcional) */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(54, 153, 74, 0.95); /* verde hoja por defecto */
+  border-radius: 6px; /* hace una forma más suave */
+  pointer-events: none;
+  opacity: 0.8;
+  animation-name: caer;
+  animation-timing-function: linear;
+}
+
+@keyframes caer {
+  0% { transform: translateY(-50px) rotate(0deg); opacity: 0.95; }
+  60% { opacity: 0.9; }
+  100% { transform: translateY(820px) rotate(360deg); opacity: 0.75; }
+}
+
+#hero {
+  width: 100%;
+  max-height: 420px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, rgba(0,180,216,0.06), rgba(2,62,138,0.03));
+  padding: 1rem 0;
+  margin-top: 2.5rem; 
+  margin-bottom: 2.5rem; 
+}
+
+.hero-stage {
+  width: min(1100px, 95%);
+  height: 320px;
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(23,48,68,0.08);
+  background: var(--card-bg);
+  margin: 0 auto; 
+}
+
+.hero-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.05);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: all 800ms ease-in-out;
+  border-radius: 6px;
+}
+
+.hero-img.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.hero-stage.collage .hero-img {
+  opacity: 1;
+  transform: none;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.hero-restart {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.5rem;
+  z-index: 30;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .hero-stage { height: 220px; }
+  .hero-img { transition: all 600ms ease-in-out; }
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+  .contenedor { grid-template-columns: repeat(2, 1fr); }
+  article img { height: 220px; }
+}
+
+/* Responsive: móvil */
+@media (max-width: 640px) {
+  .contenedor { grid-template-columns: 1fr; padding: 1rem; }
+  article img { height: 180px; }
+  article { padding: 0.9rem; }
+}
