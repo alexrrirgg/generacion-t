@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const markers = [
       {coords: [-3.4653, -62.2159], popup: '<strong>Jaguar</strong><br/>Mamífero<br/><a href="mamiferos.html">Ver más</a>'},
       {coords: [0.0236, 37.9062], popup: '<strong>Elefante africano</strong><br/>Mamífero<br/><a href="mamiferos.html">Ver más</a>'},
-      {coords: [45.0, -122.0], popup: '<strong>Bald eagle</strong><br/>Ave<br/><a href="aves.html">Ver más</a>'},
+      {coords: [45.0, -122.0], popup: '<strong>guacamayo</strong><br/>Ave<br/><a href="aves.html">Ver más</a>'},
       {coords: [-54.8, -68.3], popup: '<strong>Pingüino</strong><br/>Ave<br/><a href="aves.html">Ver más</a>'},
-      {coords: [-8.5167, 119.4333], popup: '<strong>Dragón de Komodo</strong><br/>Reptil<br/><a href="reptiles.html">Ver más</a>'},
-      {coords: [-18.2871, 147.6992], popup: '<strong>Arrecife (peces)</strong><br/>Peces<br/><a href="peces.html">Ver más</a>'},
-      {coords: [-3.0, -60.0], popup: '<strong>Rana dardo</strong><br/>Anfibio<br/><a href="anfibios.html">Ver más</a>'}
+      {coords: [-8.5167, 119.4333], popup: '<strong>iguana</strong><br/>Reptil<br/><a href="reptiles.html">Ver más</a>'},
+      {coords: [-18.2871, 147.6992], popup: '<strong>Arrecife</strong><br/>Peces<br/><a href="peces.html">Ver más</a>'},
+      {coords: [-3.0, -60.0], popup: '<strong>Rana</strong><br/>Anfibio<br/><a href="anfibios.html">Ver más</a>'}
     ];
 
     markers.forEach(m => L.marker(m.coords).addTo(map).bindPopup(m.popup));
