@@ -204,6 +204,29 @@ footer {
   background: #f7fbf9;
 }
 
+.bg-slider{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bg-slide{
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+}
+
+.bg-slide.visible{opacity:1}
+
+.bg-slide.s1{background-image: url('imgs/fondo1.jpg')}
+.bg-slide.s2{background-image: url('imgs/fondo2.jpg')}
+.bg-slide.s3{background-image: url('imgs/fondo3.jpg')}
+
 .hero-img {
   position: absolute;
   top: 50%;

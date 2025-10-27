@@ -22,6 +22,26 @@ setInterval(crearHoja, 500);
 
 /*rrt,incio*/
 document.addEventListener('DOMContentLoaded', () => {
+  const body = document.body;
+  const slider = document.createElement('div');
+  slider.className = 'bg-slider';
+  const s1 = document.createElement('div');
+  const s2 = document.createElement('div');
+  const s3 = document.createElement('div');
+  s1.className = 'bg-slide s1 visible';
+  s2.className = 'bg-slide s2';
+  s3.className = 'bg-slide s3';
+  slider.appendChild(s1);
+  slider.appendChild(s2);
+  slider.appendChild(s3);
+  body.insertBefore(slider, body.firstChild);
+  let currentBg = 0;
+  const slides = [s1, s2, s3];
+  setInterval(() => {
+    slides[currentBg].classList.remove('visible');
+    currentBg = (currentBg + 1) % slides.length;
+    slides[currentBg].classList.add('visible');
+  }, 7000);
   const heroStage = document.getElementById('hero-stage');
   const restartBtn = document.getElementById('hero-restart');
 
