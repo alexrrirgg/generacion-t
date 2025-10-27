@@ -8,16 +8,16 @@
 
 :root{
   /* Paleta principal pensada para tema natural/animal */
-  --bg-start: #f6fbfc; /* fondo suave */
-  --bg-end: #eaf6fb;
-  --primary: #2a6f97; /* azul profundo */
-  --secondary: #3aa76d; /* verde hoja */
-  --accent: #f4a261; /* naranja cálido */
-  --muted: #9fb6c6;
-  --card-bg: #ffffff;
-  --text: #173044; /* gris oscuro azulado */
-  --footer: #0b4f6c; /* azul oscuro para footer */
-  --shadow: rgba(23,48,68,0.08);
+  --bg-start: #05e61f; /* fondo suave */
+  --bg-end: #9ACB34;
+  --primary: #353e4a; /* azul profundo */
+  --secondary: #9acb34; /* verde hoja */
+  --accent: #9acb34; /* naranja cálido */
+  --muted: #1100ff;
+  --card-bg: #00eba1;
+  --text: #353e4a; /* gris oscuro azulado */
+  --footer: #9ACB34; /* azul oscuro para footer */
+  --shadow: rgba(21, 193, 6, 0.945);
 }
 
 body {
@@ -32,7 +32,7 @@ body {
 /* ENCABEZADO */
 header {
   background: linear-gradient(90deg, var(--secondary), color-mix(in srgb, var(--secondary) 70%, var(--primary) 30%));
-  color: #fff;
+  color: #353e4a;
   text-align: center;
   padding: 2rem 1rem;
   box-shadow: 0 3px 18px var(--shadow);
@@ -45,7 +45,7 @@ header h1 {
 }
 
 header nav a {
-  color: #ffffff;
+  color: #353e4a;
   margin: 0 10px;
   text-decoration: none;
   font-weight: bold;
@@ -62,7 +62,7 @@ header nav a:hover {
 }
 
 .menu-principal h2 {
-  color: #023e8a;
+  color: #353e4a;
   font-size: 2rem;
 }
 
