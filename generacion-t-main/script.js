@@ -45,26 +45,89 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroStage = document.getElementById('hero-stage');
   const restartBtn = document.getElementById('hero-restart');
 
+  // MAP (existing code expected a #map element; we've added it in the HTML)
   const mapEl = document.getElementById('map');
   if (mapEl && typeof L !== 'undefined') {
-    const map = L.map(mapEl, {zoomControl: true}).setView([20, 0], 2);
+    const map = L.map(mapEl, {zoomControl: true}).setView([10, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       attribution: '© OpenStreetMap'
     }).addTo(map);
 
+    // Lista ampliada de animales. Añade nuevas entradas aquí. Cada objeto tiene:
+    // coords: [lat, lng], name, clase (para agrupar), ruta (nombre de ruta/descripción corta), img (ruta de imagen - deja espacio para que agregues las tuyas)
     const markers = [
-      {coords: [-3.4653, -62.2159], popup: '<strong>Jaguar</strong><br/>Mamífero<br/><a href="mamiferos.html">Ver más</a>'},
-      {coords: [0.0236, 37.9062], popup: '<strong>Elefante africano</strong><br/>Mamífero<br/><a href="mamiferos.html">Ver más</a>'},
-      {coords: [45.0, -122.0], popup: '<strong>guacamayo</strong><br/>Ave<br/><a href="aves.html">Ver más</a>'},
-      {coords: [-54.8, -68.3], popup: '<strong>Pingüino</strong><br/>Ave<br/><a href="aves.html">Ver más</a>'},
-      {coords: [-8.5167, 119.4333], popup: '<strong>iguana</strong><br/>Reptil<br/><a href="reptiles.html">Ver más</a>'},
-      {coords: [-18.2871, 147.6992], popup: '<strong>Arrecife</strong><br/>Peces<br/><a href="peces.html">Ver más</a>'},
-      {coords: [-3.0, -60.0], popup: '<strong>Rana</strong><br/>Anfibio<br/><a href="anfibios.html">Ver más</a>'}
+      {coords: [-3.4653, -62.2159], name: 'Jaguar', clase: 'Mamífero', ruta: 'Panthera onca', img: 'imgs/jaguar.jpg'},
+      {coords: [0.0236, 37.9062], name: 'Elefante africano', clase: 'Mamífero', ruta: 'Loxodonta africana', img: 'imgs/elefante_africano.jpg'},
+      {coords: [-1.9579, 30.1127], name: 'Leona', clase: 'Mamífero', ruta: 'Panthera leo (hembra)', img: 'imgs/leona.jpg'},
+      {coords: [-34.6037, -58.3816], name: 'Carpincho (Capibara)', clase: 'Mamífero', ruta: 'Hydrochoerus hydrochaeris', img: 'imgs/capibara.jpg'},
+      {coords: [36.0, -5.0], name: 'Delfín común', clase: 'Mamífero', ruta: 'Delphinus delphis', img: 'imgs/delfin_comun.jpg'},
+      {coords: [25.0, -80.0], name: 'Tiburón martillo', clase: 'Pez', ruta: 'Sphyrna spp.', img: 'imgs/tiburon_martillo.jpg'},
+      {coords: [51.5074, -0.1278], name: 'Zorro común', clase: 'Mamífero', ruta: 'Vulpes vulpes', img: 'imgs/zorro_comun.jpg'},
+
+      // aves
+      {coords: [-3.0, -60.0], name: 'Guacamayo', clase: 'Ave', ruta: 'Ara macao', img: 'imgs/guacamayo.jpg'},
+      {coords: [-54.8, -68.3], name: 'Pingüino', clase: 'Ave', ruta: 'Spheniscidae', img: 'imgs/pinguino.jpg'},
+      {coords: [2.5, -60.0], name: 'Cóndor', clase: 'Ave', ruta: 'Vultur gryphus', img: 'imgs/condor.jpg'},
+
+      // reptiles
+      {coords: [-8.5167, 119.4333], name: 'Iguana', clase: 'Reptil', ruta: 'Iguana iguana', img: 'imgs/iguana.jpg'},
+      {coords: [30.0444, 31.2357], name: 'Cocodrilo', clase: 'Reptil', ruta: 'Crocodylidae', img: 'imgs/cocodrilo.jpg'},
+
+      // peces
+      {coords: [-18.2871, 147.6992], name: 'Arrecife (representativo)', clase: 'Pez', ruta: 'Ecosistema coralino', img: 'imgs/arrecife.jpg'},
+      {coords: [10.0, -60.0], name: 'Pez payaso', clase: 'Pez', ruta: 'Amphiprioninae', img: 'imgs/pez_payaso.jpg'},
+
+      // anfibios
+      {coords: [-3.0, -60.0], name: 'Rana', clase: 'Anfibio', ruta: 'Anura', img: 'imgs/rana.jpg'},
+      {coords: [5.0, -75.0], name: 'Salamandra (representativa)', clase: 'Anfibio', ruta: 'Caudata', img: 'imgs/salamandra.jpg'},
+
+      // especies extra para densidad en el mapa
+      {coords: [60.0, -149.0], name: 'Alce', clase: 'Mamífero', ruta: 'Alces alces', img: 'imgs/alce.jpg'},
+      {coords: [35.6895, 139.6917], name: 'Ciervo Sika', clase: 'Mamífero', ruta: 'Cervus nippon', img: 'imgs/ciervo_sika.jpg'},
+      {coords: [64.9631, -19.0208], name: 'Foca', clase: 'Mamífero', ruta: 'Phocidae', img: 'imgs/foca.jpg'}
     ];
 
-    markers.forEach(m => L.marker(m.coords).addTo(map).bindPopup(m.popup));
+    // Agrupar coordenadas por clase para crear rutas (polilíneas) representativas
+    const rutasPorClase = {};
+
+    markers.forEach(m => {
+      // contenido HTML mínimo para el popup/tooltip con espacio para que agregues tu propia imagen en imgs/
+      const popupContent = `
+        <div class="marker-meta">
+          <img class="popup-thumb" src="${m.img}" alt="${m.name} (añade tu imagen en imgs/)" onerror="this.style.display='none'"/>
+          <strong>${m.name}</strong><br/>
+          <em>${m.clase}</em><br/>
+          <small>Ruta: ${m.ruta}</small><br/>
+          <a href="${m.clase.toLowerCase()}.html">Ver más</a>
+        </div>
+      `;
+
+      const marker = L.marker(m.coords).addTo(map);
+      marker.bindPopup(popupContent, {minWidth:160});
+      // Mostrar popup al pasar el cursor y cerrarlo al salir
+      marker.on('mouseover', function() { this.openPopup(); });
+      marker.on('mouseout', function() { this.closePopup(); });
+
+      // Acumular para rutas
+      if (!rutasPorClase[m.clase]) rutasPorClase[m.clase] = [];
+      rutasPorClase[m.clase].push(m.coords);
+    });
+
+    // Dibujar polilíneas para cada clase (ruta representativa). Son añadidas encima del mapa.
+    Object.keys(rutasPorClase).forEach(clase => {
+      const latlngs = rutasPorClase[clase];
+      // solo si hay más de 1 punto para conectar
+      if (latlngs.length > 1) {
+        L.polyline(latlngs, {weight: 3, dashArray: '6,8'}).addTo(map);
+      }
+    });
+
+    // Ajustar el bounds del mapa para que muestre todos los marcadores de forma automática
+    const allCoords = markers.map(m => m.coords);
+    map.fitBounds(allCoords, {padding: [40,40]});
   }
+
 
   const images = [
     'imgs/mamifero1.jpg', 'imgs/mamifero2.jpg', 'imgs/mamifero3.jpeg', 'imgs/manifero4.jpg', 'imgs/mamifero5.jpg',
