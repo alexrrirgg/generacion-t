@@ -31,24 +31,29 @@ body {
 
 /* ENCABEZADO */
 header {
-  background: linear-gradient(90deg, var(--secondary), color-mix(in srgb, var(--secondary) 70%, var(--primary) 30%));
-  color: #353e4a;
   text-align: center;
   padding: 2rem 1rem;
-  box-shadow: 0 3px 18px var(--shadow);
 }
 
 header h1 {
   font-size: 2.5rem;
   letter-spacing: 2px;
   text-transform: capitalize;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+header p {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 header nav a {
-  color: #353e4a;
+  color: rgba(255, 255, 255, 0.95);
   margin: 0 10px;
   text-decoration: none;
   font-weight: bold;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 header nav a:hover {
@@ -136,32 +141,43 @@ strong {
 
 footer {
   text-align: center;
-  background: var(--footer);
-  color: #fff;
   padding: 1rem 0.9rem;
   margin-top: auto;
 }
-/*animacion de las hojas*/
-.hoja{
+/*animacion de las hojas y escarcha*/
+.hoja, .escarcha {
   position: absolute;
   width: 30px;
   height: 30px;
-  /* Si no tienes un archivo hoja.png, habrá un color de respaldo para que se vean las hojas */
-  background-image: url('hoja.png'); /* tu hoja (opcional) */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: rgba(54, 153, 74, 0.95); /* verde hoja por defecto */
-  border-radius: 6px; /* hace una forma más suave */
   pointer-events: none;
+  animation-timing-function: linear;
+  transform-origin: center;
+}
+
+.hoja {
+  background-color: #9acb34;
+  clip-path: polygon(50% 0%, 85% 30%, 100% 65%, 85% 85%, 50% 100%, 15% 85%, 0% 65%, 15% 30%);
   opacity: 0.8;
   animation-name: caer;
-  animation-timing-function: linear;
+}
+
+.escarcha {
+  background: radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation-name: caerEscarcha;
 }
 
 @keyframes caer {
-  0% { transform: translateY(-50px) rotate(0deg); opacity: 0.95; }
-  60% { opacity: 0.9; }
-  100% { transform: translateY(820px) rotate(360deg); opacity: 0.75; }
+  0% { transform: translateY(-50px) rotate(45deg) scale(1); opacity: 0.95; }
+  50% { transform: translateY(410px) rotate(180deg) scale(0.95); opacity: 0.9; }
+  100% { transform: translateY(820px) rotate(405deg) scale(0.9); opacity: 0.75; }
+}
+
+@keyframes caerEscarcha {
+  0% { transform: translateY(-50px) rotate(0deg) scale(1); opacity: 0.6; }
+  50% { transform: translateY(410px) rotate(180deg) scale(0.8); opacity: 0.4; }
+  100% { transform: translateY(820px) rotate(360deg) scale(0.6); opacity: 0.2; }
 }
 
 #hero {
@@ -185,7 +201,7 @@ footer {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 12px 36px rgba(23,48,68,0.08);
-  background: var(--card-bg);
+  background: transparent;
   margin: 0 auto; 
 }
 
@@ -229,31 +245,76 @@ footer {
 .bg-slide.s4{background-image: url('imgs/fondo4.jpg')}
 .bg-slide.s5{background-image: url('imgs/fondo5.jpg')}
 
-.hero-img {
+.hero-img-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.05);
   width: 100%;
   height: 100%;
-  object-fit: cover;
   opacity: 0;
   transition: all 800ms ease-in-out;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 6px;
 }
 
-.hero-img.show {
+.hero-img-label {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-img-wrapper:hover .hero-img-label {
+  opacity: 1;
+}
+
+.hero-img-wrapper.show {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
 
-.hero-stage.collage .hero-img {
+.hero-stage.collage .hero-img-wrapper {
   opacity: 1;
   transform: none;
-  width: auto;
-  height: auto;
-  object-fit: cover;
+  width: calc(33.33% - 16px);
+  height: calc(50% - 16px);
+  position: relative;
+  top: auto;
+  left: auto;
+  margin: 8px;
   border-radius: 6px;
+  overflow: hidden;
+  pointer-events: auto; /* Habilita clicks solo en el collage final */
+  cursor: pointer; /* Muestra el cursor de pointer en el collage */
+  transition: transform 0.3s ease;
+}
+
+.hero-stage.collage .hero-img-wrapper:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+  z-index: 1;
+}
+
+.hero-stage.collage .hero-img-label {
+  opacity: 0;
+}
+
+.hero-stage.collage .hero-img-wrapper:hover .hero-img-label {
+  opacity: 1;
 }
 
 .hero-restart {

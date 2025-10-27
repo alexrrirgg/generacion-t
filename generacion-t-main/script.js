@@ -1,24 +1,35 @@
-/* ---------- EFECTO HOJAS ---------- */
+/* ---------- EFECTO HOJAS Y ESCARCHA ---------- */
 const hojasContainer = document.getElementById("hojas");
 
 function crearHoja() {
   const hoja = document.createElement("div");
-  hoja.className = "hoja"; // coincide con .hoja en CSS
+  hoja.className = "hoja";
   hoja.style.left = Math.random() * window.innerWidth + "px";
-  hoja.style.top = '-50px'; // empezar arriba de la pantalla
-  // variar tamaño ligeramente para naturalidad
+  hoja.style.top = '-50px';
   const size = 18 + Math.floor(Math.random() * 30);
   hoja.style.width = size + 'px';
   hoja.style.height = size + 'px';
   hoja.style.animationDuration = (3 + Math.random() * 5) + "s";
   hojasContainer.appendChild(hoja);
-
-  // Elimina la hoja después de que cae
   setTimeout(() => hoja.remove(), 9000);
 }
 
-// Crear hojas cada 0.5 segundos
+function crearEscarcha() {
+  const escarcha = document.createElement("div");
+  escarcha.className = "escarcha";
+  escarcha.style.left = Math.random() * window.innerWidth + "px";
+  escarcha.style.top = '-50px';
+  const size = 8 + Math.floor(Math.random() * 15); // Más pequeña que las hojas
+  escarcha.style.width = size + 'px';
+  escarcha.style.height = size + 'px';
+  escarcha.style.animationDuration = (4 + Math.random() * 6) + "s"; // Cae más lento
+  hojasContainer.appendChild(escarcha);
+  setTimeout(() => escarcha.remove(), 10000);
+}
+
+// Crear hojas y escarcha
 setInterval(crearHoja, 500);
+setInterval(crearEscarcha, 300); // Más frecuente que las hojas
 
 /*rrt,incio*/
 document.addEventListener('DOMContentLoaded', () => {
@@ -126,26 +137,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  const images = [
-    'imgs/mamifero1.jpg', 'imgs/mamifero2.jpg', 'imgs/mamifero3.jpeg', 'imgs/manifero4.jpg', 'imgs/mamifero5.jpg',
-    'imgs/ave1.jpg', 'imgs/ave2.jpg',
-    'imgs/reptille1.jpg', 'imgs/reptille2.jpg',
-    'imgs/pez1.jpg', 'imgs/pez2.jpg',
-    'imgs/anfibio1.jpg', 'imgs/anfibio2.jpg'
+  const animalData = [
+    { src: 'imgs/mamifero1.jpg', type: 'mamiferos', title: 'Mamíferos' },
+    { src: 'imgs/ave1.jpg', type: 'aves', title: 'Aves' },
+    { src: 'imgs/reptille1.jpg', type: 'reptiles', title: 'Reptiles' },
+    { src: 'imgs/pez1.jpg', type: 'peces', title: 'Peces' },
+    { src: 'imgs/anfibio1.jpg', type: 'anfibios', title: 'Anfibios' }
   ];
 
   const imgElements = [];
   let isPlaying = false;
   let cancelPlay = false;
 
-  images.forEach((src, i) => {
+  animalData.forEach((animal, i) => {
+    const wrapper = document.createElement('a');
+    wrapper.href = animal.type + '.html';
+    wrapper.className = 'hero-img-wrapper';
+    
     const img = document.createElement('img');
-    img.src = src;
-    img.alt = 'Animal ' + (i+1);
+    img.src = animal.src;
+    img.alt = animal.title;
     img.className = 'hero-img';
     img.dataset.index = i;
-    heroStage.appendChild(img);
-    imgElements.push(img);
+    
+    const label = document.createElement('div');
+    label.className = 'hero-img-label';
+    label.textContent = animal.title;
+    
+    wrapper.appendChild(img);
+    wrapper.appendChild(label);
+    heroStage.appendChild(wrapper);
+    imgElements.push(wrapper);
   });
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -155,26 +177,25 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelPlay = false;
 
     heroStage.classList.remove('collage');
-    imgElements.forEach(img => {
-      img.style.transition = '';
-      img.style.left = '';
-      img.style.top = '';
-      img.style.width = '';
-      img.style.height = '';
-      img.style.zIndex = '';
-      img.classList.remove('show');
-      img.style.objectFit = 'cover';
-      img.style.position = 'absolute';
-      img.style.transform = 'translate(-50%, -50%) scale(1.05)';
-      img.style.left = '50%';
-      img.style.top = '50%';
+    imgElements.forEach(wrapper => {
+      wrapper.style.transition = '';
+      wrapper.style.left = '';
+      wrapper.style.top = '';
+      wrapper.style.width = '';
+      wrapper.style.height = '';
+      wrapper.style.zIndex = '';
+      wrapper.classList.remove('show');
+      wrapper.style.position = 'absolute';
+      wrapper.style.transform = 'translate(-50%, -50%) scale(1.05)';
+      wrapper.style.left = '50%';
+      wrapper.style.top = '50%';
     });
 
     for (let i = 0; i < imgElements.length; i++) {
       imgElements.forEach(el => el.classList.remove('show'));
       const el = imgElements[i];
       el.classList.add('show');
-      await sleep(1200);
+      await sleep(2000); // Aumentado para dar más tiempo a ver cada imagen
       if (cancelPlay) { isPlaying = false; return; }
     }
 
@@ -201,23 +222,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const tileH = (stageRect.height - gap * (rows + 1)) / rows;
 
     heroStage.classList.add('collage');
-
-    imgElements.forEach((img, i) => {
+    imgElements.forEach((wrapper, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
 
       const left = gap + col * (tileW + gap);
       const top = gap + row * (tileH + gap);
 
-      img.style.transition = `all ${900 + Math.floor(Math.random()*400)}ms cubic-bezier(.2,.9,.2,1)`;
-      img.style.width = `${Math.round(tileW)}px`;
-      img.style.height = `${Math.round(tileH)}px`;
-      img.style.left = `${left}px`;
-      img.style.top = `${top}px`;
-      img.style.position = 'absolute';
-      img.style.transform = 'none';
-      img.style.objectFit = 'cover';
-      img.style.zIndex = 10 + ((i%3)+1);
+      wrapper.style.transition = `all ${900 + Math.floor(Math.random()*400)}ms cubic-bezier(.2,.9,.2,1)`;
+      wrapper.style.width = `${Math.round(tileW)}px`;
+      wrapper.style.height = `${Math.round(tileH)}px`;
+      wrapper.style.left = `${left}px`;
+      wrapper.style.top = `${top}px`;
+      wrapper.style.position = 'absolute';
+      wrapper.style.transform = 'none';
+      wrapper.style.overflow = 'hidden';
+      wrapper.style.borderRadius = '6px';
+      wrapper.style.zIndex = 10 + ((i%3)+1);
+
+      const imgEl = wrapper.querySelector('img');
+      if (imgEl) {
+        imgEl.style.width = '100%';
+        imgEl.style.height = '100%';
+        imgEl.style.objectFit = 'cover';
+        imgEl.style.position = 'absolute';
+        imgEl.style.left = '0';
+        imgEl.style.top = '0';
+        imgEl.style.transform = 'none';
+        imgEl.style.borderRadius = '0';
+        imgEl.style.display = 'block';
+      }
     });
   }
 
