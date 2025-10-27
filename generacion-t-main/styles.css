@@ -226,6 +226,8 @@ footer {
 .bg-slide.s1{background-image: url('imgs/fondo1.jpg')}
 .bg-slide.s2{background-image: url('imgs/fondo2.jpg')}
 .bg-slide.s3{background-image: url('imgs/fondo3.jpg')}
+.bg-slide.s3{background-image: url('imgs/fondo4.jpg')}
+.bg-slide.s3{background-image: url('imgs/fondo5.jpg')}
 
 .hero-img {
   position: absolute;
@@ -259,7 +261,7 @@ footer {
   right: 1rem;
   bottom: 0.5rem;
   z-index: 30;
-  background: rgba(255,255,255,0.9);
+  background: rgba(126, 255, 41, 0.9);
   border: 1px solid rgba(0,0,0,0.08);
   padding: 6px 10px;
   border-radius: 8px;
