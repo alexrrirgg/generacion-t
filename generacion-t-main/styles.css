@@ -1,3 +1,16 @@
+.zen-tokyo-zoo-regular {
+  font-family: "Zen Tokyo Zoo", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-condensed{
+  font-family: "Roboto Condensed";
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
 /* ESTILOS GENERALES  */
 * {
   box-sizing: border-box;
