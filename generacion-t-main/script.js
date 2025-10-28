@@ -281,3 +281,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   playSlideshowAndAssemble();
 });
+/* ---------- Toggle sidebar (index.html) ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('sidebar-toggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', (e) => {
+    // en mobile abrimos/cerramos con la clase body.sidebar-open
+    if (document.body.classList.contains('sidebar-open')) {
+      document.body.classList.remove('sidebar-open');
+    } else {
+      document.body.classList.add('sidebar-open');
+    }
+  });
+
+  // cerrar sidebar al clicar fuera (solo en mobile)
+  document.addEventListener('click', (e) => {
+    if (!document.body.classList.contains('sidebar-open')) return;
+    const sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    // si el click NO está dentro del sidebar ni en el toggle, cerramos
+    if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+      document.body.classList.remove('sidebar-open');
+    }
+  });
+});
+
