@@ -1,4 +1,3 @@
-/* ---------- EFECTO HOJAS Y ESCARCHA ---------- */
 const hojasContainer = document.getElementById("hojas");
 
 function crearHoja() {
@@ -19,19 +18,17 @@ function crearEscarcha() {
   escarcha.className = "escarcha";
   escarcha.style.left = Math.random() * window.innerWidth + "px";
   escarcha.style.top = '-50px';
-  const size = 8 + Math.floor(Math.random() * 15); // Más pequeña que las hojas
+  const size = 8 + Math.floor(Math.random() * 15);
   escarcha.style.width = size + 'px';
   escarcha.style.height = size + 'px';
-  escarcha.style.animationDuration = (4 + Math.random() * 6) + "s"; // Cae más lento
+  escarcha.style.animationDuration = (4 + Math.random() * 6) + "s"; 
   hojasContainer.appendChild(escarcha);
   setTimeout(() => escarcha.remove(), 10000);
 }
 
-// Crear hojas y escarcha
 setInterval(crearHoja, 500);
-setInterval(crearEscarcha, 300); // Más frecuente que las hojas
+setInterval(crearEscarcha, 300);
 
-/*rrt,incio*/
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   const slider = document.createElement('div');
@@ -53,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroStage = document.getElementById('hero-stage');
   const restartBtn = document.getElementById('hero-restart');
 
-  // MAP (existing code expected a #map element; we've added it in the HTML)
+  
   const mapEl = document.getElementById('map');
   if (mapEl && typeof L !== 'undefined') {
     const map = L.map(mapEl, {zoomControl: true}).setView([10, 0], 2);
@@ -62,8 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
       attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // Lista ampliada de animales. Añade nuevas entradas aquí. Cada objeto tiene:
-    // coords: [lat, lng], name, clase (para agrupar), ruta (nombre de ruta/descripción corta), img (ruta de imagen - deja espacio para que agregues las tuyas)
     const markers = [
       {coords: [-3.4653, -62.2159], name: 'Jaguar', clase: 'Mamífero', ruta: 'Panthera onca', img: 'imgs/jaguar.jpg'},
       {coords: [0.0236, 37.9062], name: 'Elefante africano', clase: 'Mamífero', ruta: 'Loxodonta africana', img: 'imgs/elefante_africano.jpg'},
@@ -73,34 +68,26 @@ document.addEventListener('DOMContentLoaded', () => {
       {coords: [25.0, -80.0], name: 'Tiburón martillo', clase: 'Pez', ruta: 'Sphyrna spp.', img: 'imgs/tiburon_martillo.jpg'},
       {coords: [51.5074, -0.1278], name: 'Zorro común', clase: 'Mamífero', ruta: 'Vulpes vulpes', img: 'imgs/zorro_comun.jpg'},
 
-      // aves
       {coords: [-3.0, -60.0], name: 'Guacamayo', clase: 'Ave', ruta: 'Ara macao', img: 'imgs/guacamayo.jpg'},
       {coords: [-54.8, -68.3], name: 'Pingüino', clase: 'Ave', ruta: 'Spheniscidae', img: 'imgs/pinguino.jpg'},
       {coords: [2.5, -60.0], name: 'Cóndor', clase: 'Ave', ruta: 'Vultur gryphus', img: 'imgs/condor.jpg'},
 
-      // reptiles
       {coords: [-8.5167, 119.4333], name: 'Iguana', clase: 'Reptil', ruta: 'Iguana iguana', img: 'imgs/iguana.jpg'},
       {coords: [30.0444, 31.2357], name: 'Cocodrilo', clase: 'Reptil', ruta: 'Crocodylidae', img: 'imgs/cocodrilo.jpg'},
 
-      // peces
       {coords: [-18.2871, 147.6992], name: 'Arrecife (representativo)', clase: 'Pez', ruta: 'Ecosistema coralino', img: 'imgs/arrecife.jpg'},
       {coords: [10.0, -60.0], name: 'Pez payaso', clase: 'Pez', ruta: 'Amphiprioninae', img: 'imgs/pez_payaso.jpg'},
 
-      // anfibios
       {coords: [-3.0, -60.0], name: 'Rana', clase: 'Anfibio', ruta: 'Anura', img: 'imgs/rana.jpg'},
       {coords: [5.0, -75.0], name: 'Salamandra (representativa)', clase: 'Anfibio', ruta: 'Caudata', img: 'imgs/salamandra.jpg'},
 
-      // especies extra para densidad en el mapa
       {coords: [60.0, -149.0], name: 'Alce', clase: 'Mamífero', ruta: 'Alces alces', img: 'imgs/alce.jpg'},
       {coords: [35.6895, 139.6917], name: 'Ciervo Sika', clase: 'Mamífero', ruta: 'Cervus nippon', img: 'imgs/ciervo_sika.jpg'},
       {coords: [64.9631, -19.0208], name: 'Foca', clase: 'Mamífero', ruta: 'Phocidae', img: 'imgs/foca.jpg'}
     ];
-
-    // Agrupar coordenadas por clase para crear rutas (polilíneas) representativas
     const rutasPorClase = {};
 
     markers.forEach(m => {
-      // contenido HTML mínimo para el popup/tooltip con espacio para que agregues tu propia imagen en imgs/
       const popupContent = `
         <div class="marker-meta">
           <img class="popup-thumb" src="${m.img}" alt="${m.name} (añade tu imagen en imgs/)" onerror="this.style.display='none'"/>
@@ -113,16 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const marker = L.marker(m.coords).addTo(map);
       marker.bindPopup(popupContent, {minWidth:160});
-      // Mostrar popup al pasar el cursor y cerrarlo al salir
       marker.on('mouseover', function() { this.openPopup(); });
       marker.on('mouseout', function() { this.closePopup(); });
 
-      // Acumular para rutas
       if (!rutasPorClase[m.clase]) rutasPorClase[m.clase] = [];
       rutasPorClase[m.clase].push(m.coords);
     });
 
-    // Dibujar polilíneas para cada clase (ruta representativa). Son añadidas encima del mapa.
     Object.keys(rutasPorClase).forEach(clase => {
       const latlngs = rutasPorClase[clase];
       // solo si hay más de 1 punto para conectar
@@ -131,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Ajustar el bounds del mapa para que muestre todos los marcadores de forma automática
     const allCoords = markers.map(m => m.coords);
     map.fitBounds(allCoords, {padding: [40,40]});
   }
@@ -195,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
       imgElements.forEach(el => el.classList.remove('show'));
       const el = imgElements[i];
       el.classList.add('show');
-      await sleep(2000); // Aumentado para dar más tiempo a ver cada imagen
+      await sleep(2000); 
       if (cancelPlay) { isPlaying = false; return; }
     }
 
@@ -211,12 +194,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function assembleCollage() {
     const n = imgElements.length;
-    // calcular columnas/filas aproximadas (casi cuadrado)
     const cols = Math.ceil(Math.sqrt(n));
     const rows = Math.ceil(n / cols);
 
     const stageRect = heroStage.getBoundingClientRect();
-    const gap = 8; // px entre fotos
+    const gap = 8;
 
     const tileW = (stageRect.width - gap * (cols + 1)) / cols;
     const tileH = (stageRect.height - gap * (rows + 1)) / rows;
@@ -281,12 +263,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   playSlideshowAndAssemble();
 });
-/* ---------- Toggle sidebar (index.html) ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('sidebar-toggle');
   if (!toggle) return;
   toggle.addEventListener('click', (e) => {
-    // en mobile abrimos/cerramos con la clase body.sidebar-open
+    
     if (document.body.classList.contains('sidebar-open')) {
       document.body.classList.remove('sidebar-open');
     } else {
@@ -294,12 +275,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // cerrar sidebar al clicar fuera (solo en mobile)
   document.addEventListener('click', (e) => {
     if (!document.body.classList.contains('sidebar-open')) return;
     const sidebar = document.querySelector('.sidebar');
     if (!sidebar) return;
-    // si el click NO está dentro del sidebar ni en el toggle, cerramos
     if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
       document.body.classList.remove('sidebar-open');
     }

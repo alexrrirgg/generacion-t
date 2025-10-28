@@ -10,8 +10,6 @@
   font-weight: weight;
   font-style: normal;
 }
-
-/* ESTILOS GENERALES  */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -22,16 +20,15 @@
 font-size: 24px;
 }
 :root{
-  /* Paleta principal pensada para tema natural/animal */
-  --bg-start: #05e61f; /* fondo suave */
+  --bg-start: #05e61f; 
   --bg-end: #9ACB34;
-  --primary: #353e4a; /* azul profundo */
-  --secondary: #9acb34; /* verde hoja */
-  --accent: #9acb34; /* naranja cálido */
+  --primary: #353e4a; 
+  --secondary: #9acb34; 
+  --accent: #9acb34; 
   --muted: #1100ff;
   --card-bg: #00eba1;
-  --text: #353e4a; /* gris oscuro azulado */
-  --footer: #9ACB34; /* azul oscuro para footer */
+  --text: #353e4a; 
+  --footer: #9ACB34; 
   --shadow: rgba(21, 193, 6, 0.945);
 }
 
@@ -43,13 +40,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-
-/* ENCABEZADO */
 header {
   text-align: center;
   padding: 2rem 1rem;
 }
-
 header h1 {
   font-size: 2.5rem;
   letter-spacing: 2px;
@@ -57,12 +51,10 @@ header h1 {
   color:#9ACB34;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-
 header p {
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-
 header nav a {
   color: rgba(255, 255, 255, 0.95);
   margin: 0 10px;
@@ -70,17 +62,13 @@ header nav a {
   font-weight: bold;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-
 header nav a:hover {
   text-decoration: underline;
 }
-
-/* MENU PRINCIPAL  */
 .menu-principal {
   text-align: center;
   margin-top: 2rem;
 }
-
 .menu-principal h2 {
   color: #353e4a;
   font-size: 2rem;
@@ -93,7 +81,6 @@ header nav a:hover {
   gap: 1rem;
   margin-top: 1.5rem;
 }
-
 .botones-menu a {
   background: var(--primary);
   color: #fff;
@@ -159,7 +146,6 @@ footer {
   padding: 1rem 0.9rem;
   margin-top: auto;
 }
-/*animacion de las hojas y escarcha*/
 .hoja, .escarcha {
   position: absolute;
   width: 30px;
@@ -314,13 +300,13 @@ footer {
   margin: 8px;
   border-radius: 6px;
   overflow: hidden;
-  pointer-events: auto; /* Habilita clicks solo en el collage final */
-  cursor: pointer; /* Muestra el cursor de pointer en el collage */
+  pointer-events: auto; 
+  cursor: pointer; 
   transition: transform 0.3s ease;
 }
 
 .hero-stage.collage .hero-img-wrapper:hover {
-  transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+  transform: scale(1.05); 
   z-index: 1;
 }
 
@@ -349,32 +335,23 @@ footer {
   .hero-stage { height: 220px; }
   .hero-img { transition: all 600ms ease-in-out; }
 }
-
-/* Responsive: tablet */
 @media (max-width: 1024px) {
   .contenedor { grid-template-columns: repeat(2, 1fr); }
   article img { height: 220px; }
 }
-
-/* Responsive: móvil */
 @media (max-width: 640px) {
   .contenedor { grid-template-columns: 1fr; padding: 1rem; }
   article img { height: 180px; }
   article { padding: 0.9rem; }
 }
-/* ---------------------------
-   Forzar Roboto Condensed en páginas con body.roboto-condensed
-   --------------------------- */
 body.roboto-condensed,
 body.roboto-condensed * {
   font-family: 'Roboto Condensed', sans-serif !important;
   font-style: normal;
   font-weight: 400;
 }
-/* -------- Sidebar lateral (desktop) + colapsable (mobile) -------- */
-
 .sidebar-toggle {
-  display: none; /* se mostrará en pantallas pequeñas */
+  display: none; 
   position: fixed;
   left: 12px;
   top: 12px;
@@ -403,25 +380,20 @@ body.roboto-condensed * {
   transition: transform 0.28s ease;
   transform: translateX(0);
 }
-
-/* Cuando el body tenga esta clase, el sidebar se oculta (mobile behavior) */
 body.sidebar-closed .sidebar {
   transform: translateX(-100%);
 }
-
-/* Empuja el contenido para dejar espacio al sidebar en desktop */
 .content {
   margin-left: 260px;
   transition: margin-left 0.28s ease;
 }
 
-/* Cuando el sidebar está cerrado en pantallas pequeñas, el contenido ocupa todo */
 @media (max-width: 900px) {
   .sidebar {
-    transform: translateX(-100%); /* oculto por defecto en mobile */
+    transform: translateX(-100%);
   }
   body.sidebar-open .sidebar {
-    transform: translateX(0); /* abierto cuando body tiene .sidebar-open */
+    transform: translateX(0); 
   }
   .sidebar-toggle {
     display: block;
@@ -430,8 +402,6 @@ body.sidebar-closed .sidebar {
     margin-left: 0;
   }
 }
-
-/* Estilos para los enlaces del menú ya existentes (heredan .botones-menu) */
 .sidebar .botones-menu {
   display: flex;
   flex-direction: column;
@@ -450,8 +420,6 @@ body.sidebar-closed .sidebar {
   box-shadow: 0 6px 14px rgba(21,28,40,0.06);
 }
 .sidebar .botones-menu a:hover { transform: translateX(6px); }
-
-/* Mantén el header centrado visualmente cuando el sidebar existe */
 header {
   padding-left: 1.6rem;
   padding-right: 1.6rem;
