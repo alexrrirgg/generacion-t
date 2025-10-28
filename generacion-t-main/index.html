@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 <body>
@@ -20,9 +21,25 @@
     <h1 class="zen-tokyo-zoo-regular">ANIMALIA</h1>
     <p class="roboto-condensed pre">Una pagina con la intencion de adentrar personas al hermoso mundo animal y todo lo que lo rodea ,sus habitats y seres vivos
       Esperamos salgas sabiendo algo nuevo ! Gracias por visitar la pagina !
+    <br>    Explora un poco de el fascinante mundo de los animales a través de fichas interactivas, datos curiosos y contenido educativo.
+    Descubrí cómo viven, qué comen y dónde habitan las especies más sorprendentes del planeta 🌍.
     </p>
   </header>
+<section class="categorias-inicio">
+  <!-- Reutilizamos los mismos enlaces del menú -->
+  <div class="botones-menu">
+    <a href="mamiferos.html">MAMÍFEROS</a>
+    <a href="aves.html">AVES</a>
+    <a href="reptiles.html">REPTILES</a>
+    <a href="peces.html">PECES</a>
+    <a href="anfibios.html">ANFIBIOS</a>
+    <a href="habitad.html">HÁBITAT</a>
+  </div>
+</section>
+
 <aside class="sidebar" role="navigation" aria-label="Menú principal">
+  <button id="sidebar-close" class="sidebar-close" aria-label="Cerrar menú">✕</button>
+
   <main class="menu-principal">
     <h2 class="roboto-condensed">CATEGORIAS</h2>
     <div class="botones-menu">
@@ -32,13 +49,70 @@
       <a href="peces.html" class="roboto-condensed">PECES</a>
       <a href="anfibios.html" class="roboto-condensed">ANFIBIOS</a>
       <a href="habitad.html" class="roboto-condensed">HABITAD</a>
-
     </div>
   </main>
-  </aside>
-  <section id="hero" aria-label="Presentación de animales">
+
+  <section class="sidebar-contact roboto-condensed" aria-label="Contacto">
+  <h3>Contacto</h3>
+  <p class="contact-line">
+    <i class="fa-solid fa-envelope"></i> Email: 
+    <a href="mailto:info@animalia.example">info@animalia.example</a>
+  </p>
+  <p class="contact-line">
+    <i class="fa-solid fa-phone"></i> Tel: 
+    <a href="tel:+541112345678">+54 11 1234-5678</a>
+  </p>
+  <p class="contact-line">
+    <i class="fa-solid fa-location-dot"></i> Buenos Aires, Argentina
+  </p>
+  <div class="contact-links">
+    <a href="mailto:info@animalia.example" class="contact-btn">
+      <i class="fa-solid fa-paper-plane"></i> Enviar email
+    </a>
+  </div>
+  
+</section>
+
+</aside>
+
+<section id="hero" aria-label="Presentación de animales">
     <div class="hero-stage" id="hero-stage"></div>
   </section>
+  <section class="quiz-section" id="quiz">
+  <h2>Quiz de Animales</h2>
+  <p class="quiz-subtitle">Un pequeño test de repaso luego de haber explorado los animales de la página </p>
+  <div id="quiz-container">
+    <p id="quiz-question"></p>
+    <div id="quiz-options"></div>
+    <button id="quiz-next">Siguiente</button>
+    <p id="quiz-result"></p>
+  </div>
+</section>
+<!-- BOTÓN DE CONTACTO Y FORMULARIO EMERGENTE -->
+<section class="contact-wrapper" id="contacto">
+  <button id="contact-toggle" class="contact-toggle">
+    📩 Contacto
+  </button>
+
+  <div class="contact-popup" id="contact-popup">
+    <h2>Formulario de Contacto</h2>
+    <form id="contact-form" action="https://formspree.io/f/mzzblvjq" method="POST">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+
+      <label for="email">Correo:</label>
+      <input type="email" id="email" name="email" required placeholder="tunombre@email.com">
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="3" placeholder="Tu mensaje..."></textarea>
+
+      <button type="submit" class="btn-enviar">Enviar</button>
+    </form>
+    <p id="form-status"></p>
+  </div>
+</section>
+
+
   <footer>
     <p></p>
   </footer>

@@ -265,23 +265,199 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('sidebar-toggle');
-  if (!toggle) return;
+  const closeBtn = document.getElementById('sidebar-close');
+  const sidebar = document.querySelector('.sidebar');
+
+  if (!toggle || !sidebar) return;
+
+  function openSidebar() {
+    document.body.classList.add('sidebar-open');
+    // opcional: set focus para accesibilidad
+    sidebar.setAttribute('aria-hidden', 'false');
+    sidebar.focus?.();
+  }
+  function closeSidebar() {
+    document.body.classList.remove('sidebar-open');
+    sidebar.setAttribute('aria-hidden', 'true');
+  }
+  // toggle con el botón
   toggle.addEventListener('click', (e) => {
-    
-    if (document.body.classList.contains('sidebar-open')) {
-      document.body.classList.remove('sidebar-open');
-    } else {
-      document.body.classList.add('sidebar-open');
+    e.stopPropagation();
+    document.body.classList.toggle('sidebar-open');
+  });
+
+  // botón cerrar dentro del sidebar
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeSidebar();
+    });
+  }
+
+  // clic fuera del sidebar cierra (solo si está abierto)
+  document.addEventListener('click', (e) => {
+    if (!document.body.classList.contains('sidebar-open')) return;
+    if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+      closeSidebar();
     }
   });
 
-  document.addEventListener('click', (e) => {
-    if (!document.body.classList.contains('sidebar-open')) return;
-    const sidebar = document.querySelector('.sidebar');
-    if (!sidebar) return;
-    if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
-      document.body.classList.remove('sidebar-open');
+  // ESC cierra el menú
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) {
+      closeSidebar();
     }
   });
+
+  // (opcional) si quieres que el sidebar se abra en pantallas grandes al cargar,
+  // comenta la línea siguiente. Por defecto lo dejamos cerrado:
+  // if (window.innerWidth > 1200) openSidebar();
 });
+// === FORMULARIO EMERGENTE ===
+const contactBtn = document.getElementById('contact-toggle');
+const contactPopup = document.getElementById('contact-popup');
+
+if (contactBtn && contactPopup) {
+  contactBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    contactPopup.classList.toggle('show');
+  });
+
+  // cerrar si se hace clic fuera
+  document.addEventListener('click', (e) => {
+    if (!contactPopup.contains(e.target) && !contactBtn.contains(e.target)) {
+      contactPopup.classList.remove('show');
+    }
+  });
+}
+
+// --- QUIZ DE ANIMALES ---
+const quizData = [
+  {
+    animal: "Elefante africano",
+    habitat: "Sabana y selvas africanas",
+    descripcion: "El mamífero terrestre más grande del planeta.",
+    curioso: "Sus orejas ayudan a regular su temperatura.",
+    alimentacion: "Herbívoro, consume hojas, ramas y frutas."
+  },
+  {
+    animal: "Delfín común",
+    habitat: "Océanos y mares templados",
+    descripcion: "Mamífero marino muy sociable y ágil.",
+    curioso: "Duerme con un hemisferio cerebral a la vez.",
+    alimentacion: "Peces y calamares."
+  },
+  {
+    animal: "Guacamayo azulamarillo",
+    habitat: "Selvas tropicales de Sudamérica",
+    descripcion: "Ave de gran tamaño y colores brillantes.",
+    curioso: "Pueden imitar la voz humana.",
+    alimentacion: "Frutas, semillas y nueces."
+  },
+  {
+    animal: "Pingüino emperador",
+    habitat: "Antártida",
+    descripcion: "El pingüino más grande del mundo.",
+    curioso: "Se agrupan para protegerse del frío extremo.",
+    alimentacion: "Peces, crustáceos y calamares."
+  },
+  {
+    animal: "Capibara",
+    habitat: "Zonas húmedas de Sudamérica",
+    descripcion: "El roedor más grande del mundo.",
+    curioso: "Pasa gran parte del día en el agua.",
+    alimentacion: "Hierbas y plantas acuáticas."
+  },
+  {
+    animal: "Tortuga marina",
+    habitat: "Océanos tropicales y subtropicales",
+    descripcion: "Reptil marino con caparazón aerodinámico.",
+    curioso: "Las hembras vuelven a la misma playa donde nacieron.",
+    alimentacion: "Algas, medusas o crustáceos según la especie."
+  },
+  {
+    animal: "Iguana verde",
+    habitat: "Bosques húmedos y riberas de ríos",
+    descripcion: "Reptil arborícola de color verde brillante.",
+    curioso: "Puede regenerar parte de su cola si la pierde.",
+    alimentacion: "Principalmente herbívora."
+  },
+  {
+    animal: "Pez payaso",
+    habitat: "Arrecifes de coral tropicales",
+    descripcion: "Pez pequeño de color naranja con franjas blancas.",
+    curioso: "Vive entre las anémonas marinas.",
+    alimentacion: "Plancton y pequeños crustáceos."
+  },
+  {
+    animal: "Tiburón martillo",
+    habitat: "Océanos cálidos y templados",
+    descripcion: "Tiburón con cabeza en forma de martillo.",
+    curioso: "Sus ojos separados le dan visión de 360°.",
+    alimentacion: "Peces, rayas y crustáceos."
+  },
+  {
+    animal: "Rana verde",
+    habitat: "Zonas húmedas y charcas",
+    descripcion: "Anfibio de piel verde y patas largas.",
+    curioso: "Respira tanto por la piel como por los pulmones.",
+    alimentacion: "Insectos pequeños y gusanos."
+  },
+  {
+    animal: "Salamandra común",
+    habitat: "Bosques húmedos europeos",
+    descripcion: "Anfibio negro con manchas amarillas.",
+    curioso: "Puede segregar toxinas como defensa.",
+    alimentacion: "Insectos, lombrices y babosas."
+  }
+];
+
+const quizContainer = document.getElementById('quiz-container');
+const questionEl = document.getElementById('quiz-question');
+const optionsEl = document.getElementById('quiz-options');
+const nextBtn = document.getElementById('quiz-next');
+const resultEl = document.getElementById('quiz-result');
+
+let currentQuestion = null;
+let selectedAnimal = null;
+let questionType = null;
+
+function loadQuestion() {
+  resultEl.textContent = '';
+  selectedAnimal = quizData[Math.floor(Math.random() * quizData.length)];
+  const types = ["habitat", "descripcion", "curioso", "alimentacion"];
+  questionType = types[Math.floor(Math.random() * types.length)];
+  
+  questionEl.textContent = `¿Cuál es el ${questionType} del ${selectedAnimal.animal}?`;
+
+  // opciones: 1 correcta + 3 aleatorias
+  const options = [selectedAnimal[questionType]];
+  while (options.length < 4) {
+    const random = quizData[Math.floor(Math.random() * quizData.length)][questionType];
+    if (!options.includes(random)) options.push(random);
+  }
+  options.sort(() => Math.random() - 0.5);
+  
+  optionsEl.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.addEventListener('click', () => checkAnswer(opt, btn));
+    optionsEl.appendChild(btn);
+  });
+}
+
+function checkAnswer(answer, button) {
+  if (answer === selectedAnimal[questionType]) {
+    resultEl.textContent = `✅ ¡Correcto! ${selectedAnimal.animal}: ${selectedAnimal[questionType]}`;
+    button.style.background = 'lightgreen';
+  } else {
+    resultEl.textContent = `❌ Incorrecto. ${selectedAnimal.animal}: ${selectedAnimal[questionType]}`;
+    button.style.background = '#ff7675';
+  }
+  [...optionsEl.children].forEach(btn => btn.disabled = true);
+}
+
+nextBtn.addEventListener('click', loadQuestion);
+loadQuestion();
 
