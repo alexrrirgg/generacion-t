@@ -90,11 +90,13 @@ header nav a:hover {
   font-size: 1.05rem;
   transition: transform 0.18s ease, background 0.18s ease;
   box-shadow: 0 6px 16px rgba(42,111,151,0.08);
+  border-radius: 90px;
 }
 
 .botones-menu a:hover {
   background: color-mix(in srgb, var(--primary) 80%, #000000 20%);
   transform: translateY(-3px);
+  border-radius: 90px;
 }
 
 .contenedor {
@@ -418,6 +420,7 @@ body.sidebar-closed .sidebar {
   color: #fff;
   text-decoration: none;
   box-shadow: 0 6px 14px rgba(21,28,40,0.06);
+  border-radius: 90px;
 }
 .sidebar .botones-menu a:hover { transform: translateX(6px); }
 header {
