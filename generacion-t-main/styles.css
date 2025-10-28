@@ -10,7 +10,9 @@
   font-weight: weight;
   font-style: normal;
 }
-
+.pre {
+  font-size: 24px;
+}
 /* ESTILOS GENERALES  */
 * {
   box-sizing: border-box;
