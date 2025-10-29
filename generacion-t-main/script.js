@@ -272,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openSidebar() {
     document.body.classList.add('sidebar-open');
-    // opcional: set focus para accesibilidad
     sidebar.setAttribute('aria-hidden', 'false');
     sidebar.focus?.();
   }
@@ -280,40 +279,30 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('sidebar-open');
     sidebar.setAttribute('aria-hidden', 'true');
   }
-  // toggle con el botón
   toggle.addEventListener('click', (e) => {
     e.stopPropagation();
     document.body.classList.toggle('sidebar-open');
   });
 
-  // botón cerrar dentro del sidebar
   if (closeBtn) {
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       closeSidebar();
     });
   }
-
-  // clic fuera del sidebar cierra (solo si está abierto)
   document.addEventListener('click', (e) => {
     if (!document.body.classList.contains('sidebar-open')) return;
     if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
       closeSidebar();
     }
   });
-
-  // ESC cierra el menú
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) {
       closeSidebar();
     }
   });
 
-  // (opcional) si quieres que el sidebar se abra en pantallas grandes al cargar,
-  // comenta la línea siguiente. Por defecto lo dejamos cerrado:
-  // if (window.innerWidth > 1200) openSidebar();
 });
-// === FORMULARIO EMERGENTE ===
 const contactBtn = document.getElementById('contact-toggle');
 const contactPopup = document.getElementById('contact-popup');
 
@@ -322,16 +311,12 @@ if (contactBtn && contactPopup) {
     e.stopPropagation();
     contactPopup.classList.toggle('show');
   });
-
-  // cerrar si se hace clic fuera
   document.addEventListener('click', (e) => {
     if (!contactPopup.contains(e.target) && !contactBtn.contains(e.target)) {
       contactPopup.classList.remove('show');
     }
   });
 }
-
-// --- QUIZ DE ANIMALES ---
 const quizData = [
   {
     animal: "Elefante africano",
@@ -429,8 +414,6 @@ function loadQuestion() {
   questionType = types[Math.floor(Math.random() * types.length)];
   
   questionEl.textContent = `¿Cuál es el ${questionType} del ${selectedAnimal.animal}?`;
-
-  // opciones: 1 correcta + 3 aleatorias
   const options = [selectedAnimal[questionType]];
   while (options.length < 4) {
     const random = quizData[Math.floor(Math.random() * quizData.length)][questionType];

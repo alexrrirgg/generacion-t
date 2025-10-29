@@ -428,24 +428,15 @@ header {
   padding-right: 1.6rem;
 }
 
-/* ---------------------
-   Sidebar: cerrado por defecto en escritorio
-   El menú se abre cuando body tiene la clase .sidebar-open
-   --------------------- */
-
 .sidebar {
   transform: translateX(-100%);
   transition: transform 0.28s ease, box-shadow 0.28s ease;
   will-change: transform;
 }
-
-/* cuando .sidebar-open se agrega al body, el sidebar aparece */
 body.sidebar-open .sidebar {
   transform: translateX(0);
   box-shadow: 6px 0 22px rgba(0,0,0,0.18);
 }
-
-/* Ajuste del contenido cuando el sidebar está abierto */
 .content {
   margin-left: 0;
   transition: margin-left 0.28s ease;
@@ -453,10 +444,8 @@ body.sidebar-open .sidebar {
 body.sidebar-open .content {
   margin-left: 260px;
 }
-
-/* Botón para abrir/cerrar (ya existe #sidebar-toggle; mantenerlo visible en todas las pantallas) */
 .sidebar-toggle {
-  display: block; /* ahora visible también en escritorio */
+  display: block;
   position: fixed;
   left: 12px;
   top: 12px;
@@ -469,8 +458,6 @@ body.sidebar-open .content {
   cursor: pointer;
   box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
-
-/* Botón cerrar dentro del sidebar */
 .sidebar-close {
   position: absolute;
   right: 10px;
@@ -485,8 +472,6 @@ body.sidebar-open .content {
   border-radius: 8px;
   z-index: 130;
 }
-
-/* Estilos de la sección contacto */
 .sidebar-contact {
   margin-top: 1.2rem;
   padding-top: 0.8rem;
@@ -523,25 +508,21 @@ body.sidebar-open .content {
   border: 1px solid rgba(255,255,255,0.04);
 }
 
-/* Media queries: para pantallas muy pequeñas mantenemos la UX habitual */
 @media (max-width: 900px) {
-  /* en móvil, el comportamiento sigue siendo que el sidebar está oculto y el sidebar-toggle lo abre */
   .sidebar {
     width: 260px;
     transform: translateX(-100%);
   }
   body.sidebar-open .sidebar { transform: translateX(0); }
   .content { margin-left: 0; }
-  body.sidebar-open .content { margin-left: 0; } /* en móvil no desplazamos el contenido */
+  body.sidebar-open .content { margin-left: 0; } 
 }
-
-/* Asegurar que el contenido no quede tapado por el toggle */
 @media (min-width: 901px) {
   .sidebar-toggle { left: 18px; top: 18px; }
   .sidebar { width: 260px; }
   body.sidebar-open .content { margin-left: 260px; }
 }
-/* Scrollbar moderno solo dentro del sidebar */
+
 .sidebar::-webkit-scrollbar {
   width: 10px;
 }
@@ -560,8 +541,6 @@ body.sidebar-open .content {
 .sidebar::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #5ba2ff, var(--secondary));
 }
-
-/* Firefox */
 .sidebar {
   scrollbar-width: thin;
   scrollbar-color: var(--secondary) rgba(0, 0, 0, 0.15);
@@ -657,7 +636,6 @@ body.sidebar-open .content {
   font-size: 1.1rem;
   color: var(--secondary);
 }
-/* === FORMULARIO EMERGENTE PEGADO ABAJO DERECHA === */
 
 .contact-wrapper {
   position: relative;
@@ -665,8 +643,6 @@ body.sidebar-open .content {
   justify-content: flex-end;
   margin: 2rem 1rem;
 }
-
-/* Botón que abre el formulario */
 .contact-toggle {
   background: var(--secondary);
   color: #111;
@@ -683,8 +659,6 @@ body.sidebar-open .content {
   background: #ffec99;
   transform: scale(1.05);
 }
-
-/* Contenedor del formulario emergente */
 .contact-popup {
   position: absolute;
   right: 0;
@@ -701,15 +675,11 @@ body.sidebar-open .content {
   color: #fff;
   z-index: 100;
 }
-
-/* Cuando el formulario está visible */
 .contact-popup.show {
   transform: translateY(0);
   opacity: 1;
   pointer-events: all;
 }
-
-/* Formulario interno */
 .contact-popup h2 {
   font-size: 1.1rem;
   color: var(--secondary);
@@ -760,7 +730,6 @@ body.sidebar-open .content {
   color: var(--secondary);
 }
 
-/* Adaptable en móviles */
 @media (max-width: 600px) {
   .contact-wrapper {
     justify-content: center;
@@ -770,14 +739,14 @@ body.sidebar-open .content {
     bottom: 120%;
   }
 }
-/* Aplicar la fuente externa al quiz y al formulario */
+
 .quiz-section,
 .contact-popup,
 .contact-section-flotante,
 .contact-wrapper {
   font-family: 'Roboto Condensed', sans-serif;
 }
-/* Centrar los botones del inicio sin duplicar estilos */
+
 .categorias-inicio {
   text-align: center;
   margin: 2rem auto;
